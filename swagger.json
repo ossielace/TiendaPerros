@@ -1,0 +1,1051 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Tienda Perros",
+        "description": "<html><body>Documentacion del proyecto del <b>Tienda perros</b></body></html>",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "3.128.112.17",
+    "basePath": "",
+    "tags": [
+        {
+            "name": "usuarios",
+            "description": "API para obtener información de los usuarios"
+        },
+        {
+            "name": "perros",
+            "description": "API para obtener información de los perros"
+        },
+        {
+            "name": "razas",
+            "description": "API para obtener información de las razas de las razas"
+        },
+        {
+            "name": "roles",
+            "description": "API para obtener información de los roles"
+        },
+        {
+            "name": "sexos",
+            "description": "API para obtener información de los tipos de sexo de los perros"
+        },
+        {
+            "name": "usuarios_compras",
+            "description": "API para obtener información de las compras que ha hecho un usuario "
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/api/usuarios/mostrarTodosUsuarios": {
+            "get": {
+                "tags": [
+                    "usuarios"
+                ],
+                "summary": "Listado de todos los usuarios que están registrados en la página de la tienda",
+                "description": "Servicio que devuelve la información detallada de los usuarios",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id_usuario": 1,
+                                    "nombre": "Ossiel",
+                                    "telefono": "9531227890",
+                                    "correo": "ossiel@gmail.com",
+                                    "password": "1234",
+                                    "id_rol": 1,
+                                    "usuario": "Ossielito"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Usuarios"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/obtenerUsuario/{id}": {
+            "get": {
+                "tags": [
+                    "usuarios"
+                ],
+                "summary": "Información de un usuario si es que existe",
+                "description": "Servicio que devuelve la información detallada del usuario buscado mediante la id",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id_usuario": 2,
+                                    "nombre": "Pedro",
+                                    "telefono": "9531233847",
+                                    "correo": "pedro@gmail.com",
+                                    "password": "47895abc",
+                                    "id_rol": 2,
+                                    "usuario": "Pedrito123"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Usuarios"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del usuario",
+                        "type": "number",
+                        "default": "1"
+                    }
+                ]
+            }
+        },
+        "/api/usuarios/crearUsuario/": {
+            "post": {
+                "summary": "Creando un usuario",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Usuario",
+                        "in": "body",
+                        "description": "Usuario agregado",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoUsuario"
+                        }
+                    }
+                ],
+                "tags": ["usuarios"],
+                "responses": {
+                    "200": {
+                        "description": "Insertado con exito"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/actualizarUsuario/{id}": {
+            "put": {
+                "summary": "Actualizar la informaciòn del usuario",
+                "description": "<p>Servicio que permite editar la informaciòn del usuario, dado el id del mismo </p><p>&nbsp;</p>",
+                "operationId": "update",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del usuario",
+                        "type": "number",
+                        "default": "3"
+                    },
+                    {
+                        "name": "usuario",
+                        "in": "body",
+                        "description": "Nombre del usuario",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoUsuario"
+                        }
+                    }
+                ],
+                "tags": ["usuarios"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/eliminarUsuario/{id}": {
+            "delete": {
+                "tags": ["usuarios"],
+                "summary": "Eliminar el usuario de la tienda identificándolo con su id",
+                "description": "<p>Servicio que elimina el usuario dando el identificador</p><p>&nbsp;</p><p><em><strong>¿Fué una ejecución exitoso?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del usuario",
+                        "type": "number",
+                        "default": "8"
+                    }
+                ]
+            }
+        },
+        "/api/perros/mostrarTodosPerros": {
+            "get": {
+                "tags": [
+                    "perros"
+                ],
+                "summary": "Listado de todos los perros que están registrados en la página de la tienda",
+                "description": "Servicio que devuelve la información detallada de los perros",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id_perro": 1,
+                                    "nombre": "Toby",
+                                    "caracteristicas": "Perro Negro con manchas blancas de las montañas",
+                                    "edad": 2,
+                                    "id_sexo": 1,
+                                    "id_raza": 2,
+                                    "precio": 4000
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Perros"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/perros/obtenerPerro/{id}": {
+            "get": {
+                "tags": [
+                    "perros"
+                ],
+                "summary": "Información de un perro si es que existe",
+                "description": "Servicio que devuelve la información detallada del perro buscado mediante la id",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id_perro": 2,
+                                    "nombre": "Leonel",
+                                    "caracteristicas": "Perro Agridulce de escocia",
+                                    "edad": 10,
+                                    "id_sexo": 1,
+                                    "id_raza": 1,
+                                    "precio": 200
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Perros"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del perro",
+                        "type": "number",
+                        "default": "1"
+                    }
+                ]
+            }
+        },
+        "/api/perros/crearPerro/": {
+            "post": {
+                "summary": "Creando un perro",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Perro",
+                        "in": "body",
+                        "description": "Perro agregado",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoPerro"
+                        }
+                    }
+                ],
+                "tags": ["perros"],
+                "responses": {
+                    "200": {
+                        "description": "Insertado con exito"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/perros/actualizarPerro/{id}": {
+            "put": {
+                "summary": "Actualizar la informaciòn del perro",
+                "description": "<p>Servicio que permite editar la informaciòn del perro, dado el id del mismo </p><p>&nbsp;</p>",
+                "operationId": "update",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del perro",
+                        "type": "number",
+                        "default": "3"
+                    },
+                    {
+                        "name": "perro",
+                        "in": "body",
+                        "description": "Nombre del perro",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoPerro"
+                        }
+                    }
+                ],
+                "tags": ["perros"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/perros/eliminarPerro/{id}": {
+            "delete": {
+                "tags": ["perros"],
+                "summary": "Eliminar el perro de la tienda identificándolo con su id",
+                "description": "<p>Servicio que elimina el perro dando el identificador</p><p>&nbsp;</p><p><em><strong>¿Fué una ejecución exitoso?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del perro",
+                        "type": "number",
+                        "default": "3"
+                    }
+                ]
+            }
+        },
+        "/api/razas/mostrarTodosRazas": {
+            "get": {
+                "tags": [
+                    "razas"
+                ],
+                "summary": "Listado de todos las razas que están registrados en la página de la tienda",
+                "description": "Servicio que devuelve la información detallada de las razas",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id_raza": 1,
+                                    "nombre_raza": "Chihuahua"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Razas"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/razas/obtenerRaza/{id}": {
+            "get": {
+                "tags": [
+                    "razas"
+                ],
+                "summary": "Información de una raza si es que existe",
+                "description": "Servicio que devuelve la información detallada de la raza buscada mediante la id",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id_raza": 1,
+                                    "nombre_raza": "Chihuahua"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Razas"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador de la raza",
+                        "type": "number",
+                        "default": "1"
+                    }
+                ]
+            }
+        },
+        "/api/razas/crearRaza/": {
+            "post": {
+                "summary": "Creando una raza",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Raza",
+                        "in": "body",
+                        "description": "Raza agregada",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaRaza"
+                        }
+                    }
+                ],
+                "tags": ["razas"],
+                "responses": {
+                    "200": {
+                        "description": "Insertada con exito"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/razas/actualizarRaza/{id}": {
+            "put": {
+                "summary": "Actualizar la informaciòn de la raza",
+                "description": "<p>Servicio que permite editar la informaciòn de la raza, dado el id de la misma </p><p>&nbsp;</p>",
+                "operationId": "update",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador de la raza",
+                        "type": "number",
+                        "default": "3"
+                    },
+                    {
+                        "name": "raza",
+                        "in": "body",
+                        "description": "Nombre de la raza",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaRaza"
+                        }
+                    }
+                ],
+                "tags": ["razas"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/razas/eliminarRaza/{id}": {
+            "delete": {
+                "tags": ["razas"],
+                "summary": "Eliminar la raza de la tienda identificándola con su id",
+                "description": "<p>Servicio que elimina la raza dando el identificador</p><p>&nbsp;</p><p><em><strong>¿Fué una ejecución exitoso?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador de la raza",
+                        "type": "number",
+                        "default": "3"
+                    }
+                ]
+            }
+        },
+        "/api/roles/mostrarTodosRoles": {
+            "get": {
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Listado de todos los roles que están registrados en la página de la tienda",
+                "description": "Servicio que devuelve la información detallada de los roles",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id_rol": 1,
+                                    "nombre_rol": "Administrador"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Roles"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/roles/obtenerRol/{id}": {
+            "get": {
+                "tags": [
+                    "roles"
+                ],
+                "summary": "Información de un rol si es que existe",
+                "description": "Servicio que devuelve la información detallada de un rol buscado mediante la id",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id_rol": 2,
+                                    "nombre_rol": "Comprador"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Roles"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del rol",
+                        "type": "number",
+                        "default": "1"
+                    }
+                ]
+            }
+        },
+        "/api/sexos/mostrarTodosSexos": {
+            "get": {
+                "tags": [
+                    "sexos"
+                ],
+                "summary": "Listado de todos los sexos de los perros en venta",
+                "description": "Servicio que devuelve los sexos",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id_sexo": 1,
+                                    "sexo": "Macho"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Sexos"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/sexos/obtenerSexo/{id}": {
+            "get": {
+                "tags": [
+                    "sexos"
+                ],
+                "summary": "Información de un sexo si es que existe",
+                "description": "Servicio que devuelve la información detallada de un sexo buscado mediante la id",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id_sexo": 1,
+                                    "sexo": "Macho"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Sexos"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del sexo",
+                        "type": "number",
+                        "default": "1"
+                    }
+                ]
+            }
+        },
+        "/api/usuarios_compras/mostrarTodosUsuarios_compras": {
+            "get": {
+                "tags": [
+                    "usuarios_compras"
+                ],
+                "summary": "Listado de todos los usuarios_compras que están registrados en la página de la tienda",
+                "description": "Servicio que devuelve la información detallada de los usuarios_compras",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id_venta": 1,
+                                    "id_usuario": 1,
+                                    "id_perro": 2,
+                                    "precio": 200
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Usuarios_compras"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/usuarios_compras/obtenerUsuario_compra/{id}": {
+            "get": {
+                "tags": [
+                    "usuarios_compras"
+                ],
+                "summary": "Información de un usuarios_compras si es que existe",
+                "description": "Servicio que devuelve la información detallada del usuarios_compras buscado mediante la id",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "id_venta": 1,
+                                    "id_usuario": 1,
+                                    "id_perro": 3,
+                                    "precio": 340
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Usuarios_compras"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del usuario_compra",
+                        "type": "number",
+                        "default": "1"
+                    }
+                ]
+            }
+        },
+        "/api/usuarios_compras/crearUsuario_compra/": {
+            "post": {
+                "summary": "Creando un usuarios_compras",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Usuario_compra",
+                        "in": "body",
+                        "description": "Usuario_compra agregado",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoUsuario_compra"
+                        }
+                    }
+                ],
+                "tags": ["usuarios_compras"],
+                "responses": {
+                    "200": {
+                        "description": "Insertado con exito"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/usuarios_compras/actualizarUsuario_compra/{id}": {
+            "put": {
+                "summary": "Actualizar la informaciòn del usuario_compra",
+                "description": "<p>Servicio que permite editar la informaciòn del usuario_compra, dado el id del mismo </p><p>&nbsp;</p>",
+                "operationId": "update",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del usuario_compra",
+                        "type": "number",
+                        "default": "3"
+                    },
+                    {
+                        "name": "usuario_compra",
+                        "in": "body",
+                        "description": "Nombre del usuario_compra",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoUsuario_compra"
+                        }
+                    }
+                ],
+                "tags": ["usuarios_compras"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/usuarios_compras/eliminarUsuario_compra/{id}": {
+            "delete": {
+                "tags": ["usuarios_compras"],
+                "summary": "Eliminar el usuario_compra de la tienda identificándolo con su id",
+                "description": "<p>Servicio que elimina el usuario_compra dando el identificador</p><p>&nbsp;</p><p><em><strong>¿Fué una ejecución exitoso?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del usuario_compra",
+                        "type": "number",
+                        "default": "3"
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "Usuario": {
+            "type": "object",
+            "properties": {
+                "id_usuario": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar al usuario"
+                },
+                "nombre": {
+                    "type": "string",
+                    "description": "Nombre del usuario"
+                },
+                "correo": {
+                    "type": "string",
+                    "description": "Correo del usuario"
+                },
+                "id_rol": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar el rol del usuario"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "Contrasena del usuario"
+                }
+            }
+        },
+        "Usuarios": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Usuario"
+            }
+        },
+        "NuevoUsuario": {
+            "type": "object",
+            "properties": {
+                "nombre": {
+                    "type": "string",
+                    "description": "Nombre del usuario"
+                },
+                "correo": {
+                    "type": "string",
+                    "description": "Correo del usuario"
+                },
+                "id_rol": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar el rol del usuario"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "Password del usuario"
+                }
+            }
+        },
+        "Perro": {
+            "type": "object",
+            "properties": {
+                "id_perro": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar al perro"
+                },
+                "nombre": {
+                    "type": "string",
+                    "description": "Nombre del perro"
+                },
+                "id_sexo": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar el rol del usuario"
+                },
+                "id_raza": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar la raza"
+                },
+                "precio": {
+                    "type": "number",
+                    "description": "Precio del perrito"
+                },
+                "caracteristicas": {
+                    "type": "string",
+                    "description": "Caracteristicas del perro"
+                }
+            }
+        },
+        "Perros": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Perro"
+            }
+        },
+        "NuevoPerro": {
+            "type": "object",
+            "properties": {
+                "nombre": {
+                    "type": "string",
+                    "description": "Nombre del perro"
+                },
+                "id_sexo": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar el rol del usuario"
+                },
+                "id_raza": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar la raza"
+                },
+                "precio": {
+                    "type": "number",
+                    "description": "Precio del perrito"
+                },
+                "caracteristicas": {
+                    "type": "string",
+                    "description": "Caracteristicas del perro"
+                },
+                "edad": {
+                    "type": "number",
+                    "description": "Edad del perrito"
+                }
+            }
+        },
+        "Raza": {
+            "type": "object",
+            "properties": {
+                "id_raza": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar la raza"
+                },
+                "nombre_raza": {
+                    "type": "string",
+                    "description": "Nombre de la raza"
+                }
+            }
+        },
+        "Razas": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Raza"
+            }
+        },
+        "NuevaRaza": {
+            "type": "object",
+            "properties": {
+                "nombre_raza": {
+                    "type": "string",
+                    "description": "Nombre de la raza"
+                }
+            }
+        },
+        "Rol": {
+            "type": "object",
+            "properties": {
+                "id_rol": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar el rol"
+                },
+                "nombre_rol": {
+                    "type": "string",
+                    "description": "Nombre del rol"
+                }
+            }
+        },
+        "Sexos": {
+            "type": "object",
+            "properties": {
+                "id_sexo": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar el sexo del perrito"
+                },
+                "sexo": {
+                    "type": "string",
+                    "description": "Sexo"
+                }
+            }
+        },
+        "Usuario_compra": {
+            "type": "object",
+            "properties": {
+                "id_usuario": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar al usuario"
+                },
+                "id_perro": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar al perro comprado"
+                },
+                "id_venta": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar la venta"
+                },
+                "precio": {
+                    "type": "number",
+                    "description": "Precio de el perro comprado"
+                }
+            }
+        },
+        "Usuarios_compras": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Usuario_compra"
+            }
+        },
+        "NuevoUsuario_compra": {
+            "type": "object",
+            "properties": {
+                "id_perro": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar al perro comprado"
+                },
+                "id_venta": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar la venta"
+                },
+                "precio": {
+                    "type": "number",
+                    "description": "Precio de el perro comprado"
+                }
+            }
+        }
+    }
+}
